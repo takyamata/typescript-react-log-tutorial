@@ -19,16 +19,7 @@ import { Outlet } from 'react-router-dom';
 
 const drawerWidth = 240;
 
-interface Props {
-	/**
-	 * Injected by the documentation to work in an iframe.
-	 * Remove this when copying and pasting into your project.
-	 */
-	window?: () => Window;
-}
-
-export default function ResponsiveDrawer(props: Props) {
-	const { window } = props;
+export default function AppLayout() {
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const [isClosing, setIsClosing] = React.useState(false);
 
@@ -55,10 +46,10 @@ export default function ResponsiveDrawer(props: Props) {
 				{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
 				<ListItem key={text} disablePadding>
 					<ListItemButton>
-					<ListItemIcon>
-						{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-					</ListItemIcon>
-					<ListItemText primary={text} />
+						<ListItemIcon>
+							{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+						</ListItemIcon>
+						<ListItemText primary={text} />
 					</ListItemButton>
 				</ListItem>
 				))}
@@ -68,10 +59,10 @@ export default function ResponsiveDrawer(props: Props) {
 				{['All mail', 'Trash', 'Spam'].map((text, index) => (
 				<ListItem key={text} disablePadding>
 					<ListItemButton>
-					<ListItemIcon>
-						{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-					</ListItemIcon>
-					<ListItemText primary={text} />
+						<ListItemIcon>
+							{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+						</ListItemIcon>
+						<ListItemText primary={text} />
 					</ListItemButton>
 				</ListItem>
 				))}
@@ -79,12 +70,12 @@ export default function ResponsiveDrawer(props: Props) {
 		</div>
 	);
 
-  // Remove this const when copying and pasting into your project.
-	const container = window !== undefined ? () => window().document.body : undefined;
-
+	// sxはMUIでインラインCSSを当てるためのもの
 	return (
-		<Box sx={{ display: 'flex' }}>
+		<Box sx={{ display: 'flex', bgcolor: (theme) => theme.palette.grey[100], minHeight: '100vh' }}>
 			<CssBaseline />
+
+			{/* ヘッダー */}
 			<AppBar
 				position="fixed"
 				sx={{
@@ -92,54 +83,60 @@ export default function ResponsiveDrawer(props: Props) {
 					ml: { sm: `${drawerWidth}px` },
 				}}
 			>
-			<Toolbar>
-				<IconButton
-					color="inherit"
-					aria-label="open drawer"
-					edge="start"
-					onClick={handleDrawerToggle}
-					sx={{ mr: 2, display: { sm: 'none' } }}
-				>
-					<MenuIcon />
-				</IconButton>
-				<Typography variant="h6" noWrap component="div">
-					Responsive drawer
-				</Typography>
-			</Toolbar>
+				<Toolbar>
+					{/* ボタン */}
+					<IconButton
+						color="inherit"
+						aria-label="open drawer"
+						edge="start"
+						onClick={handleDrawerToggle}
+						sx={{ mr: 2, display: { sm: 'none' } }}
+					>
+						{/* アイコン */}
+						<MenuIcon />
+					</IconButton>
+					<Typography variant="h6" noWrap component="div">
+						Responsive drawer
+					</Typography>
+				</Toolbar>
 			</AppBar>
+
+			{/* サイドバー */}
 			<Box
 				component="nav"
 				sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
 				aria-label="mailbox folders"
 			>
-				{/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+				{/* SP */}
 				<Drawer
-					container={container}
 					variant="temporary"
 					open={mobileOpen}
 					onTransitionEnd={handleDrawerTransitionEnd}
 					onClose={handleDrawerClose}
 					ModalProps={{
-					keepMounted: true, // Better open performance on mobile.
+						keepMounted: true, // Better open performance on mobile.
 					}}
 					sx={{
-					display: { xs: 'block', sm: 'none' },
-					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+						display: { xs: 'block', sm: 'none' },
+						'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
 					}}
 				>
 					{drawer}
 				</Drawer>
+				{/* PC */}
 				<Drawer
 					variant="permanent"
 					sx={{
-					display: { xs: 'none', sm: 'block' },
-					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+						display: { xs: 'none', sm: 'block' },
+						'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
 					}}
 					open
 				>
 					{drawer}
 				</Drawer>
 			</Box>
+
+			{/* メインコンテンツ */}
 			<Box
 				component="main"
 				sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
