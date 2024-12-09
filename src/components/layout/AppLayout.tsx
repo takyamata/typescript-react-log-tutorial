@@ -12,71 +12,81 @@ import SideBar from '../common/SideBar';
 const drawerWidth = 240;
 
 export default function AppLayout() {
-	const [mobileOpen, setMobileOpen] = React.useState(false);
-	const [isClosing, setIsClosing] = React.useState(false);
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [isClosing, setIsClosing] = React.useState(false);
 
-	const handleDrawerClose = () => {
-		setIsClosing(true);
-		setMobileOpen(false);
-	};
+    const handleDrawerClose = () => {
+        setIsClosing(true);
+        setMobileOpen(false);
+    };
 
-	const handleDrawerTransitionEnd = () => {
-		setIsClosing(false);
-	};
+    const handleDrawerTransitionEnd = () => {
+        setIsClosing(false);
+    };
 
-	const handleDrawerToggle = () => {
-		if (!isClosing) {
-			setMobileOpen(!mobileOpen);
-		}
-	};
+    const handleDrawerToggle = () => {
+        if (!isClosing) {
+            setMobileOpen(!mobileOpen);
+        }
+    };
 
-	// sxはMUIでインラインCSSを当てるためのもの
-	return (
-		<Box sx={{ display: 'flex', bgcolor: (theme) => theme.palette.grey[100], minHeight: '100vh' }}>
-			<CssBaseline />
+    // sxはMUIでインラインCSSを当てるためのもの
+    return (
+        <Box
+            sx={{
+                display: 'flex',
+                bgcolor: (theme) => theme.palette.grey[100],
+                minHeight: '100vh',
+            }}
+        >
+            <CssBaseline />
 
-			{/* ヘッダー */}
-			<AppBar
-				position="fixed"
-				sx={{
-					width: { sm: `calc(100% - ${drawerWidth}px)` },
-					ml: { sm: `${drawerWidth}px` },
-				}}
-			>
-				<Toolbar>
-					{/* ボタン */}
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						edge="start"
-						onClick={handleDrawerToggle}
-						sx={{ mr: 2, display: { sm: 'none' } }}
-					>
-						{/* アイコン */}
-						<MenuIcon />
-					</IconButton>
-					<Typography variant="h6" noWrap component="div">
-						TypeScript × React 家計簿
-					</Typography>
-				</Toolbar>
-			</AppBar>
+            {/* ヘッダー */}
+            <AppBar
+                position="fixed"
+                sx={{
+                    width: { md: `calc(100% - ${drawerWidth}px)` },
+                    ml: { md: `${drawerWidth}px` },
+                }}
+            >
+                <Toolbar>
+                    {/* ボタン */}
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, display: { md: 'none' } }}
+                    >
+                        {/* アイコン */}
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" noWrap component="div">
+                        TypeScript × React 家計簿
+                    </Typography>
+                </Toolbar>
+            </AppBar>
 
-			{/* サイドバー */}
-			<SideBar
-				drawerWidth={drawerWidth}
-				mobileOpen={mobileOpen}
-				handleDrawerTransitionEnd={handleDrawerTransitionEnd}
-				handleDrawerClose={handleDrawerClose}
-			/>
+            {/* サイドバー */}
+            <SideBar
+                drawerWidth={drawerWidth}
+                mobileOpen={mobileOpen}
+                handleDrawerTransitionEnd={handleDrawerTransitionEnd}
+                handleDrawerClose={handleDrawerClose}
+            />
 
-			{/* メインコンテンツ */}
-			<Box
-				component="main"
-				sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-			>
-				<Toolbar />
-			<Outlet/>
-			</Box>
-		</Box>
-	);
+            {/* メインコンテンツ */}
+            <Box
+                component="main"
+                sx={{
+                    flexGrow: 1,
+                    p: 3,
+                    width: { md: `calc(100% - ${drawerWidth}px)` },
+                }}
+            >
+                <Toolbar />
+                <Outlet />
+            </Box>
+        </Box>
+    );
 }
