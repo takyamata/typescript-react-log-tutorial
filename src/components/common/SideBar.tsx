@@ -1,14 +1,4 @@
-import {
-    Box,
-    Divider,
-    Drawer,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Toolbar,
-} from '@mui/material';
+import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import React, { type FC } from 'react';
@@ -67,11 +57,11 @@ const Sidebar: FC<SidebarProps> = ({
                         key={item.text}
                         to={item.path}
                         style={({ isActive }) => {
-                            console.log(
-                                '選択されたメニューは',
-                                item.text,
-                                isActive
-                            );
+                            // console.log(
+                            //     '選択されたメニューは',
+                            //     item.text,
+                            //     isActive
+                            // );
                             return {
                                 ...baseLinkStyle,
                                 ...(isActive ? activeLinkStyle : {}),
@@ -93,11 +83,7 @@ const Sidebar: FC<SidebarProps> = ({
     );
 
     return (
-        <Box
-            component="nav"
-            sx={{ width: { md: drawerWidth }, flexShrink: { sm: 0 } }}
-            aria-label="mailbox folders"
-        >
+        <Box component="nav" sx={{ width: { md: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
             {/* SP */}
             <Drawer
                 variant="temporary"

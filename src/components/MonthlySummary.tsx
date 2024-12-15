@@ -4,8 +4,17 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { theme } from './theme/theme';
+import type { Transaction } from '../types';
+import { financeCaluculations } from '../util/financeCaluculations';
 
-const MonthlySummary = () => {
+interface MonthlySummaryProps {
+    monthlyTransactions: Transaction[];
+}
+
+const MonthlySummary = ({ monthlyTransactions }: MonthlySummaryProps) => {
+    // console.log(monthlyTransactions);
+    // 計算関数を使って1か月のデータの収支を計算
+    const { income, expense, balance } = financeCaluculations(monthlyTransactions);
     return (
         <Grid container spacing={{ xs: 1, sm: 2 }} mb={2}>
             {/* 収入 */}
@@ -40,7 +49,7 @@ const MonthlySummary = () => {
                                 },
                             }}
                         >
-                            ¥300
+                            ¥{income}
                         </Typography>
                     </CardContent>
                 </Card>
@@ -77,7 +86,7 @@ const MonthlySummary = () => {
                                 },
                             }}
                         >
-                            ¥300
+                            ¥{expense}
                         </Typography>
                     </CardContent>
                 </Card>
@@ -118,7 +127,7 @@ const MonthlySummary = () => {
                                 },
                             }}
                         >
-                            ¥300
+                            ¥{balance}
                         </Typography>
                     </CardContent>
                 </Card>
