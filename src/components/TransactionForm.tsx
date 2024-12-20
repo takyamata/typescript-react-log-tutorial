@@ -20,10 +20,10 @@ import TrainIcon from "@mui/icons-material/Train";
 import WorkIcon from "@mui/icons-material/Work";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import SavingsIcon from "@mui/icons-material/Savings";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import type { ExpenseCategory, IncomeCategory } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { transactionSchema } from "../validations/schema";
+import { transactionSchema, type Schema } from "../validations/schema";
 
 interface TransactionFormProps {
     onCloseForm: () => void;
@@ -57,7 +57,7 @@ const TransactionForm = ({ onCloseForm, isEntryDrawerOpen, currentDay }: Transac
         watch,
         formState: { errors },
         handleSubmit,
-    } = useForm({
+    } = useForm<Schema>({
         defaultValues: {
             type: "expense",
             date: currentDay,
@@ -79,7 +79,9 @@ const TransactionForm = ({ onCloseForm, isEntryDrawerOpen, currentDay }: Transac
         setValue("date", currentDay);
     }, [currentDay]);
 
-    const onSubmit = (data: any) => {};
+    const onSubmit: SubmitHandler<Schema> = (data) => {
+        console.log(data);
+    };
     return (
         <Box
             sx={{
